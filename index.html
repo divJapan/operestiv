@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Mie Opere - Tracker Personale</title>
+    <meta name="description"
+        content="Traccia i tuoi videogiochi, anime, serie TV e film preferiti con voti e stati personalizzati">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">
+                    <span class="logo-icon">🎮</span>
+                    Le Mie Opere
+                </h1>
+                <div class="header-actions">
+                    <div class="backup-menu">
+                        <button class="btn btn-secondary" id="exportDataBtn" title="Esporta tutti i dati">
+                            <span class="btn-icon">💾</span>
+                            Esporta Dati
+                        </button>
+                        <button class="btn btn-secondary" id="importDataBtn" title="Importa dati da file">
+                            <span class="btn-icon">📥</span>
+                            Importa Dati
+                        </button>
+                        <input type="file" id="importFileInput" accept=".json" style="display: none;">
+                    </div>
+                    <button class="btn btn-primary" id="addMediaBtn">
+                        <span class="btn-icon">+</span>
+                        Aggiungi Opera
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Filters Section -->
+            <section class="filters-section">
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Cerca per titolo..." class="search-input">
+                </div>
+
+                <div class="filters">
+                    <div class="filter-group">
+                        <label class="filter-label">Tipo:</label>
+                        <div class="filter-buttons" id="typeFilters">
+                            <button class="filter-btn active" data-type="all">Tutti</button>
+                            <button class="filter-btn" data-type="game">🎮 Videogiochi</button>
+                            <button class="filter-btn" data-type="anime">📺 Anime</button>
+                            <button class="filter-btn" data-type="series">🎬 Serie TV</button>
+                            <button class="filter-btn" data-type="movie">🎥 Film</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Stato:</label>
+                        <div class="filter-buttons" id="statusFilters">
+                            <button class="filter-btn active" data-status="all">Tutti</button>
+                            <button class="filter-btn" data-status="completed">✅ Completato</button>
+                            <button class="filter-btn" data-status="watching">▶️ In Corso</button>
+                            <button class="filter-btn" data-status="on-hold">⏸️ Riprendere</button>
+                            <button class="filter-btn" data-status="planned">📋 Da Vedere</button>
+                            <button class="filter-btn" data-status="replay">🔄 Da Rivedere</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Ordina:</label>
+                        <select id="sortSelect" class="sort-select">
+                            <option value="ratingDesc" selected>Voto (alto-basso)</option>
+                            <option value="ratingAsc">Voto (basso-alto)</option>
+                            <option value="dateDesc">Data (più recente)</option>
+                            <option value="dateAsc">Data (più vecchio)</option>
+                            <option value="titleAsc">Titolo (A-Z)</option>
+                            <option value="titleDesc">Titolo (Z-A)</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Vista:</label>
+                        <button id="viewToggle" class="view-toggle-btn" title="Cambia vista">
+                            <span id="viewIcon">📋</span>
+                            <span id="viewText">Compatta</span>
+                        </button>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Per pagina:</label>
+                        <select id="itemsPerPageSelect" class="sort-select">
+                            <option value="10">10</option>
+                            <option value="20" selected>20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="all">Tutti</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Pagination Controls -->
+                <div class="pagination-controls" id="paginationTop" style="display: none;">
+                    <button class="pagination-btn" id="firstPage" title="Prima pagina">⏮️</button>
+                    <button class="pagination-btn" id="prevPage" title="Pagina precedente">◀️</button>
+                    <span class="pagination-info" id="pageInfo">Pagina 1 di 1</span>
+                    <button class="pagination-btn" id="nextPage" title="Pagina successiva">▶️</button>
+                    <button class="pagination-btn" id="lastPage" title="Ultima pagina">⏭️</button>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats-section" id="statsSection">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalCount">0</div>
+                    <div class="stat-label">Totale Opere</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="completedCount">0</div>
+                    <div class="stat-label">Completate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="watchingCount">0</div>
+                    <div class="stat-label">In Corso</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="avgRating">-</div>
+                    <div class="stat-label">Voto Medio</div>
+                </div>
+            </section>
+
+            <!-- Media Grid -->
+            <section class="media-grid" id="mediaGrid">
+                <!-- Media cards will be inserted here -->
+            </section>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState">
+                <div class="empty-icon">📚</div>
+                <h2 class="empty-title">Nessuna opera trovata</h2>
+                <p class="empty-text">Inizia ad aggiungere i tuoi videogiochi, anime, serie TV e film preferiti!</p>
+                <button class="btn btn-primary" id="addMediaBtnEmpty">
+                    <span class="btn-icon">+</span>
+                    Aggiungi la Prima Opera
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add/Edit Modal -->
+    <div class="modal" id="mediaModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Aggiungi Opera</h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+
+            <form class="modal-form" id="mediaForm">
+                <input type="hidden" id="mediaId">
+
+                <div class="form-group">
+                    <label for="mediaTitle" class="form-label">Titolo *</label>
+                    <input type="text" id="mediaTitle" class="form-input"
+                        placeholder="Es. The Last of Us, Attack on Titan..." required>
+                    <div class="suggestions" id="suggestions"></div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="mediaType" class="form-label">Tipo *</label>
+                        <select id="mediaType" class="form-select" required>
+                            <option value="">Seleziona tipo</option>
+                            <option value="game">🎮 Videogioco</option>
+                            <option value="anime">📺 Anime</option>
+                            <option value="series">🎬 Serie TV</option>
+                            <option value="movie">🎥 Film</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mediaStatus" class="form-label">Stato *</label>
+                        <select id="mediaStatus" class="form-select" required>
+                            <option value="">Seleziona stato</option>
+                            <option value="completed">✅ Completato/Visto</option>
+                            <option value="watching">▶️ In Corso/Visione</option>
+                            <option value="on-hold">⏸️ Riprendere (In Pausa)</option>
+                            <option value="planned">📋 Da Giocare/Vedere</option>
+                            <option value="replay">🔄 Da Rigiocare/Rivedere</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" id="ratingGroup">
+                    <label for="mediaRating" class="form-label">
+                        Voto (1-10) <span id="ratingOptional"
+                            style="color: var(--text-muted); font-size: 0.85rem;"></span>
+                    </label>
+                    <input type="number" id="mediaRating" class="form-input" min="1" max="10" step="0.1" value="5"
+                        placeholder="Es. 9.5, 8.7, 10">
+                    <div class="rating-stars" id="ratingStars"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="mediaNotes" class="form-label">Note Personali</label>
+                    <textarea id="mediaNotes" class="form-textarea"
+                        placeholder="Aggiungi note, impressioni, progressi..." rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="mediaCover" class="form-label">URL Copertina (opzionale)</label>
+                    <input type="url" id="mediaCover" class="form-input"
+                        placeholder="Lascia vuoto per ricerca automatica">
+                    <div class="cover-preview" id="coverPreview"></div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">Annulla</button>
+                    <button type="submit" class="btn btn-primary">
+                        <span id="submitBtnText">Aggiungi</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-overlay" id="deleteOverlay"></div>
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2 class="modal-title">Conferma Eliminazione</h2>
+                <button class="modal-close" id="deleteModalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Sei sicuro di voler eliminare <strong id="deleteMediaTitle"></strong>?</p>
+                <p class="text-muted">Questa azione non può essere annullata.</p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Annulla</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Elimina</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js?v=3"></script>
+</body>
+
+</html>
