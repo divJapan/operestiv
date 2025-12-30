@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
@@ -104,26 +105,10 @@
                         </button>
                     </div>
 
-                    <div class="filter-group">
-                        <label class="filter-label">Per pagina:</label>
-                        <select id="itemsPerPageSelect" class="sort-select">
-                            <option value="10">10</option>
-                            <option value="20" selected>20</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                            <option value="all">Tutti</option>
-                        </select>
-                    </div>
+
                 </div>
 
-                <!-- Pagination Controls -->
-                <div class="pagination-controls" id="paginationTop" style="display: none;">
-                    <button class="pagination-btn" id="firstPage" title="Prima pagina">⏮️</button>
-                    <button class="pagination-btn" id="prevPage" title="Pagina precedente">◀️</button>
-                    <span class="pagination-info" id="pageInfo">Pagina 1 di 1</span>
-                    <button class="pagination-btn" id="nextPage" title="Pagina successiva">▶️</button>
-                    <button class="pagination-btn" id="lastPage" title="Ultima pagina">⏭️</button>
-                </div>
+
             </section>
 
             <!-- Stats Section -->
@@ -260,7 +245,7 @@
         </div>
     </div>
 
-    <script src="app.js?v=3"></script>
+    <script src="app.js?v=4"></script>
 </body>
 
 </html>
