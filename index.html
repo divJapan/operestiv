@@ -23,20 +23,27 @@
                     Le Mie Opere
                 </h1>
                 <div class="header-actions">
+                    <div class="cloud-status" id="cloudStatus" title="Stato Sincronizzazione Cloud">
+                        <span class="cloud-icon" id="cloudIcon">☁️</span>
+                    </div>
                     <div class="backup-menu">
+                        <button class="btn btn-secondary" id="syncCloudBtn" title="Sincronizza con Netlify Cloud">
+                            <span class="btn-icon">🔄</span>
+                            Cloud Sync
+                        </button>
                         <button class="btn btn-secondary" id="exportDataBtn" title="Esporta tutti i dati">
                             <span class="btn-icon">💾</span>
-                            Esporta Dati
+                            Esporta
                         </button>
                         <button class="btn btn-secondary" id="importDataBtn" title="Importa dati da file">
                             <span class="btn-icon">📥</span>
-                            Importa Dati
+                            Importa
                         </button>
                         <input type="file" id="importFileInput" accept=".json" style="display: none;">
                     </div>
                     <button class="btn btn-primary" id="addMediaBtn">
                         <span class="btn-icon">+</span>
-                        Aggiungi Opera
+                        Aggiungi
                     </button>
                 </div>
             </div>
