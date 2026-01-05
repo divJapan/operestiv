@@ -1,43 +1,855 @@
+const INITIAL_DATA = [
+    {
+        "id": "1766639488235",
+        "title": "The last of us part I",
+        "type": "game",
+        "status": "completed",
+        "rating": 10,
+        "notes": "",
+        "cover": "https://imgs.search.brave.com/AIWqEfzpB_ISASNTekyBgeHJAyhcB3nbt4CjzO4qLTU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/cGxheWVyLml0L3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE5LzEy/L3RoZS1sYXN0LW9m/LXVzLWNvcGVydGlu/YS1naW9jby5qcGc",
+        "dateAdded": "2025-12-25T05:11:28.235Z"
+    },
+    {
+        "id": "1766639531074",
+        "title": "The last of us part II",
+        "type": "game",
+        "status": "completed",
+        "rating": 10,
+        "notes": "",
+        "cover": "https://imgs.search.brave.com/haVOoa7qOodM_i_A0hGZQmxgJ4r74u-jK2G1T0N25t8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvZW4vdGh1bWIv/NC80Zi9UTE9VX1Ay/X0JveF9BcnRfMi5w/bmcvMjUwcHgtVExP/VV9QMl9Cb3hfQXJ0/XzIucG5n",
+        "dateAdded": "2025-12-25T05:12:11.074Z"
+    },
+    {
+        "id": "1766639970498",
+        "title": "Red dead redemption 2",
+        "type": "game",
+        "status": "replay",
+        "rating": 9.9,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1q1f.webp",
+        "dateAdded": "2025-12-25T05:19:30.498Z"
+    },
+    {
+        "id": "1766640061891",
+        "title": "Silent hill 2",
+        "type": "game",
+        "status": "replay",
+        "rating": 9.4,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/coavaf.webp",
+        "dateAdded": "2025-12-25T05:21:01.891Z"
+    },
+    {
+        "id": "1766640200901",
+        "title": "Beyond two souls",
+        "type": "game",
+        "status": "replay",
+        "rating": 8,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co8r4w.webp",
+        "dateAdded": "2025-12-25T05:23:20.901Z"
+    },
+    {
+        "id": "1766640259529",
+        "title": "Life is strange 1",
+        "type": "game",
+        "status": "completed",
+        "rating": 9.7,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1r8e.webp",
+        "dateAdded": "2025-12-25T05:24:19.529Z"
+    },
+    {
+        "id": "1766640305328",
+        "title": "Clair obscure expedition 33",
+        "type": "game",
+        "status": "completed",
+        "rating": 9.2,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co9gam.webp",
+        "dateAdded": "2025-12-25T05:25:05.328Z"
+    },
+    {
+        "id": "1766640347915",
+        "title": "Heavy rain",
+        "type": "game",
+        "status": "replay",
+        "rating": 9,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/coaajv.webp",
+        "dateAdded": "2025-12-25T05:25:47.915Z"
+    },
+    {
+        "id": "1766640389580",
+        "title": "Resident evil 4 remake",
+        "type": "game",
+        "status": "completed",
+        "rating": 8.5,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co6bo0.webp",
+        "dateAdded": "2025-12-25T05:26:29.580Z"
+    },
+    {
+        "id": "1766640438060",
+        "title": "The walking dead",
+        "type": "game",
+        "status": "replay",
+        "rating": 9.8,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co7axc.webp",
+        "dateAdded": "2025-12-25T05:27:18.060Z"
+    },
+    {
+        "id": "1766640468869",
+        "title": "The wolf among us",
+        "type": "game",
+        "status": "completed",
+        "rating": 8.5,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1rcy.webp",
+        "dateAdded": "2025-12-25T05:27:48.869Z"
+    },
+    {
+        "id": "1766640508884",
+        "title": "Dispatch",
+        "type": "game",
+        "status": "completed",
+        "rating": 8.7,
+        "notes": "",
+        "cover": "https://imgs.search.brave.com/FmvegHyuZgPceU_No43JuGHRh7bCMfyHba9FRh50hVs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9ob3ds/b25ndG9iZWF0LmNv/bS9nYW1lcy8xNjA2/MThfRGlzcGF0Y2gu/anBnP3dpZHRoPTc2/MA",
+        "dateAdded": "2025-12-25T05:28:28.884Z"
+    },
+    {
+        "id": "1766640622774",
+        "title": "Assassin's creed 1",
+        "type": "game",
+        "status": "completed",
+        "rating": 8,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1rrw.webp",
+        "dateAdded": "2025-12-25T05:30:22.774Z"
+    },
+    {
+        "id": "1766640658509",
+        "title": "Assassin's creed 2",
+        "type": "game",
+        "status": "completed",
+        "rating": 9.3,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1nrv.webp",
+        "dateAdded": "2025-12-25T05:30:58.509Z"
+    },
+    {
+        "id": "1766640689549",
+        "title": "Assassin's creed 3",
+        "type": "game",
+        "status": "completed",
+        "rating": 9.4,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1xii.webp",
+        "dateAdded": "2025-12-25T05:31:29.549Z"
+    },
+    {
+        "id": "1766640762073",
+        "title": "Assassn's creed black flag",
+        "type": "game",
+        "status": "completed",
+        "rating": 8.5,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co4qfn.webp",
+        "dateAdded": "2025-12-25T05:32:42.073Z"
+    },
+    {
+        "id": "1766640920560",
+        "title": "Assassin's creed unity",
+        "type": "game",
+        "status": "completed",
+        "rating": 7.7,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1xiq.webp",
+        "dateAdded": "2025-12-25T05:35:20.560Z"
+    },
+    {
+        "id": "1766640978966",
+        "title": "Assassin's creed rogue",
+        "type": "game",
+        "status": "completed",
+        "rating": 7.6,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1xir.webp",
+        "dateAdded": "2025-12-25T05:36:18.966Z"
+    },
+    {
+        "id": "1766641012655",
+        "title": "Assassin's Creed syndicate",
+        "type": "game",
+        "status": "completed",
+        "rating": 7.4,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1xis.webp",
+        "dateAdded": "2025-12-25T05:36:52.655Z"
+    },
+    {
+        "id": "1766641045346",
+        "title": "Assassin's Creed origins",
+        "type": "game",
+        "status": "completed",
+        "rating": 7.2,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1rbe.webp",
+        "dateAdded": "2025-12-25T05:37:25.346Z"
+    },
+    {
+        "id": "1766641076640",
+        "title": "Assassin's creed odyssey",
+        "type": "game",
+        "status": "completed",
+        "rating": 8.1,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co2nul.webp",
+        "dateAdded": "2025-12-25T05:37:56.640Z"
+    },
+    {
+        "id": "1766641105491",
+        "title": "Assassin's creed valhalla",
+        "type": "game",
+        "status": "completed",
+        "rating": 6.9,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co2ed3.webp",
+        "dateAdded": "2025-12-25T05:38:25.491Z"
+    },
+    {
+        "id": "1766641129159",
+        "title": "Assassin's creed shadows",
+        "type": "game",
+        "status": "completed",
+        "rating": 7.4,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co87cu.webp",
+        "dateAdded": "2025-12-25T05:38:49.159Z"
+    },
+    {
+        "id": "1766641164293",
+        "title": "Assassin's creed mirage",
+        "type": "game",
+        "status": "completed",
+        "rating": 7.3,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co57sj.webp",
+        "dateAdded": "2025-12-25T05:39:24.293Z"
+    },
+    {
+        "id": "1766641223649",
+        "title": "Detroit become human",
+        "type": "game",
+        "status": "replay",
+        "rating": 9,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co6mzf.webp",
+        "dateAdded": "2025-12-25T05:40:23.649Z"
+    },
+    {
+        "id": "1766641246541",
+        "title": "Elden ring",
+        "type": "game",
+        "status": "completed",
+        "rating": 8.6,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co4jni.webp",
+        "dateAdded": "2025-12-25T05:40:46.541Z"
+    },
+    {
+        "id": "1766641277806",
+        "title": "Resident evil 2 remake",
+        "type": "game",
+        "status": "watching",
+        "rating": 8.4,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1ir3.webp",
+        "dateAdded": "2025-12-25T05:41:17.806Z"
+    },
+    {
+        "id": "1766641432909",
+        "title": "South park the stick of truth",
+        "type": "game",
+        "status": "completed",
+        "rating": 8.5,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1v8x.webp",
+        "dateAdded": "2025-12-25T05:43:52.909Z"
+    },
+    {
+        "id": "1766641545106",
+        "title": "South Park: The Fractured But Whole",
+        "type": "game",
+        "status": "on-hold",
+        "rating": 5,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1v8w.webp",
+        "dateAdded": "2025-12-25T05:45:45.106Z"
+    },
+    {
+        "id": "1766641933534",
+        "title": "Breaking bad",
+        "type": "series",
+        "status": "completed",
+        "rating": 10,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg",
+        "dateAdded": "2025-12-25T05:52:13.534Z"
+    },
+    {
+        "id": "1766641969945",
+        "title": "The walking dead",
+        "type": "series",
+        "status": "completed",
+        "rating": 9,
+        "notes": "",
+        "cover": "https://imgs.search.brave.com/wdipKrmJFdDCZfdLQYlRup-0EAGcrl_kUvt2miQYCzM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NzFMd2xUbVp6SUwu/anBn",
+        "dateAdded": "2025-12-25T05:52:49.945Z"
+    },
+    {
+        "id": "1766641992016",
+        "title": "The good doctor",
+        "type": "series",
+        "status": "completed",
+        "rating": 9,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/luhKkdD80qe62fwop6sdrXK9jUT.jpg",
+        "dateAdded": "2025-12-25T05:53:12.016Z"
+    },
+    {
+        "id": "1766642032046",
+        "title": "Tredici",
+        "type": "series",
+        "status": "completed",
+        "rating": 9,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/r6vlLLCl8SYka5hObkP5Jn5H5uR.jpg",
+        "dateAdded": "2025-12-25T05:53:52.046Z"
+    },
+    {
+        "id": "1766642104815",
+        "title": "La casa di carta",
+        "type": "series",
+        "status": "completed",
+        "rating": 8.8,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/u1RSyTfhoKBMlVqXfoEzGldlDtL.jpg",
+        "dateAdded": "2025-12-25T05:55:04.815Z"
+    },
+    {
+        "id": "1766642140377",
+        "title": "Squid game",
+        "type": "series",
+        "status": "completed",
+        "rating": 8.5,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/nW5rupC5zMeAGgGBYXkr8JL8Xq7.jpg",
+        "dateAdded": "2025-12-25T05:55:40.377Z"
+    },
+    {
+        "id": "1766642237729",
+        "title": "Wednesday",
+        "type": "series",
+        "status": "on-hold",
+        "rating": 8,
+        "notes": "Iniziare episodio 5",
+        "cover": "https://imgs.search.brave.com/SSeNABMtyf7_CYOj3qZ8tiChQUVXjOg9OU5ALLh8QwE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZS50bWRiLm9yZy90/L3AvdzUwMC85UEZv/bkJoeTRjUXk3Snoy/ME5wTXlnY3pPa3Yu/anBn",
+        "dateAdded": "2025-12-25T05:57:17.729Z"
+    },
+    {
+        "id": "1766642277084",
+        "title": "Better Call Saul",
+        "type": "series",
+        "status": "on-hold",
+        "rating": 5,
+        "notes": "Finita stagione 1",
+        "cover": "https://imgs.search.brave.com/7LyxRl3eVJ868xmluCjNbHUo4RTlNvD9JtjjVYS7JRQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tci5j/b21pbmdzb29uLml0/L3Jzei9zZXJpZXR2/L3NlcmllLzQ1NC80/NTRfNC5qcGc_cHJl/c2V0PXBzdHIyMzU",
+        "dateAdded": "2025-12-25T05:57:57.084Z"
+    },
+    {
+        "id": "1766642374778",
+        "title": "Attack on titan",
+        "type": "anime",
+        "status": "replay",
+        "rating": 10,
+        "notes": "",
+        "cover": "https://imgs.search.brave.com/y-L7too9vukfuzfnZGrKOeCD-1UnVUvqpf6ze-JqJPA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvMzY2/NjguanBn",
+        "dateAdded": "2025-12-25T05:59:34.778Z"
+    },
+    {
+        "id": "1766642415346",
+        "title": "Detective Conan",
+        "type": "anime",
+        "status": "completed",
+        "rating": 9.7,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/gW14n6xxONXrya8CIDhRe5Ada7U.jpg",
+        "dateAdded": "2025-12-25T06:00:15.346Z"
+    },
+    {
+        "id": "1766642445921",
+        "title": "Death note",
+        "type": "anime",
+        "status": "completed",
+        "rating": 9.8,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/chnG4pYo89weaBjXHJWvW68E35B.jpg",
+        "dateAdded": "2025-12-25T06:00:45.921Z"
+    },
+    {
+        "id": "1766642477869",
+        "title": "Dragon Ball Z",
+        "type": "anime",
+        "status": "completed",
+        "rating": 9,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/f2zhRLqwRLrKhEMeIM7Z5buJFo3.jpg",
+        "dateAdded": "2025-12-25T06:01:17.869Z"
+    },
+    {
+        "id": "1766642500157",
+        "title": "Dragon ball gt",
+        "type": "anime",
+        "status": "completed",
+        "rating": 8.5,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/whMOujSNYXRQeeCWf39CfkqguFy.jpg",
+        "dateAdded": "2025-12-25T06:01:40.157Z"
+    },
+    {
+        "id": "1766643112766",
+        "title": "Life is strange true colors",
+        "type": "game",
+        "status": "completed",
+        "rating": 7,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co2vpp.webp",
+        "dateAdded": "2025-12-25T06:11:52.766Z"
+    },
+    {
+        "id": "1766643156398",
+        "title": "Life is strange double exposure",
+        "type": "game",
+        "status": "completed",
+        "rating": 8,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co8bp9.webp",
+        "dateAdded": "2025-12-25T06:12:36.398Z"
+    },
+    {
+        "id": "1766643192707",
+        "title": "Stranger things",
+        "type": "series",
+        "status": "watching",
+        "rating": 9.2,
+        "notes": "Attendere per gran finale",
+        "cover": "https://image.tmdb.org/t/p/w500/cVxVGwHce6xnW8UaVUggaPXbmoE.jpg",
+        "dateAdded": "2025-12-25T06:13:12.707Z"
+    },
+    {
+        "id": "1766643317209",
+        "title": "Uncharted 4",
+        "type": "game",
+        "status": "completed",
+        "rating": 8.5,
+        "notes": "",
+        "cover": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1r7h.webp",
+        "dateAdded": "2025-12-25T06:15:17.209Z"
+    },
+    {
+        "id": "1766783073165",
+        "title": "Resident evil Village",
+        "type": "game",
+        "status": "on-hold",
+        "rating": 7.9,
+        "notes": "",
+        "cover": "https://imgs.search.brave.com/aKUrlA7mjexPmZ9AEDHcNFPrw-C0LCZYzhhER_kOgVY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMtcHJkLmlnbmlt/Z3MuY29tLzIwMjEv/MDEvMjIvcmUtdmls/bGFnZS1idXR0b24t/ZmluLTE2MTEyNzc3/MTUxOTMuanBnP2Ny/b3A9MToxLHNtYXJ0/JmZvcm1hdD1qcGcm/YXV0bz13ZWJwJnF1/YWxpdHk9ODA",
+        "dateAdded": "2025-12-26T21:04:33.165Z"
+    },
+    {
+        "id": "1766935642299",
+        "title": "Ritorno al futuro",
+        "type": "movie",
+        "status": "completed",
+        "rating": 9,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/AkmUoSHkxW9txpzZ52gCcWweEkE.jpg",
+        "dateAdded": "2025-12-28T15:27:22.299Z"
+    },
+    {
+        "id": "1766935655842",
+        "title": "Ritorno al futuro 2",
+        "type": "movie",
+        "status": "completed",
+        "rating": 9,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/y86WZGmsiKHZ0HmH1NZRx2iOaP4.jpg",
+        "dateAdded": "2025-12-28T15:27:35.842Z"
+    },
+    {
+        "id": "1766935672171",
+        "title": "Ritorno al futuro - Parte III",
+        "type": "movie",
+        "status": "completed",
+        "rating": 9,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/fR29F37jN4y1xapDAcjI9CEgM65.jpg",
+        "dateAdded": "2025-12-28T15:27:52.171Z"
+    },
+    {
+        "id": "1766935697900",
+        "title": "La maledizione della prima luna",
+        "type": "movie",
+        "status": "completed",
+        "rating": 9,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/AfhQSm3zu2PC7AZ45YKvX9OuFOZ.jpg",
+        "dateAdded": "2025-12-28T15:28:17.900Z"
+    },
+    {
+        "id": "1766935715607",
+        "title": "Pirati dei Caraibi - La maledizione del forziere fantasma",
+        "type": "movie",
+        "status": "completed",
+        "rating": 9,
+        "notes": "1:49:26",
+        "cover": "https://image.tmdb.org/t/p/w500/yH5iDtRaq53q0sSU6EgUatKhrEn.jpg",
+        "dateAdded": "2025-12-28T15:28:35.607Z"
+    },
+    {
+        "id": "1766935740487",
+        "title": "Pirati dei Caraibi - Oltre i confini del mare",
+        "type": "movie",
+        "status": "replay",
+        "rating": 5,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/p0aMDd3EtOCfImHIeL9hgPnLRIo.jpg",
+        "dateAdded": "2025-12-28T15:29:00.487Z"
+    },
+    {
+        "id": "1766935760496",
+        "title": "Pirati dei Caraibi - La vendetta di Salazar",
+        "type": "movie",
+        "status": "replay",
+        "rating": 5,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/vvglsPQgyGogyTu2e59dJYGlJNE.jpg",
+        "dateAdded": "2025-12-28T15:29:20.496Z"
+    },
+    {
+        "id": "1766935795466",
+        "title": "Polar Express",
+        "type": "movie",
+        "status": "completed",
+        "rating": 7,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/pjbpInddfbe0TvcJvpHmRQSucdV.jpg",
+        "dateAdded": "2025-12-28T15:29:55.466Z"
+    },
+    {
+        "id": "1766936968285",
+        "title": "Resident evil 4 DLC",
+        "type": "game",
+        "status": "completed",
+        "rating": 8.6,
+        "notes": "",
+        "cover": "https://imgs.search.brave.com/nhkxaOQoXcm2x5DQPLXlUuf8OxSbxni8uHYKO_m0fcM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLmVi/YXlpbWcu/Y29tL2lt/YWdlcy9nL0hjOEFB/T1N3cn5abE5zR0cv/cy1sNTAwLmpwZw",
+        "dateAdded": "2025-12-28T15:49:28.285Z"
+    },
+    {
+        "id": "1767027481518",
+        "title": "Pulp Fiction",
+        "type": "movie",
+        "status": "planned",
+        "rating": null,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/9p10J9Xp7MuaVac56g8BwAuXEsA.jpg",
+        "dateAdded": "2025-12-29T16:58:01.518Z"
+    },
+    {
+        "id": "1767027540200",
+        "title": "I segreti di Twin Peaks",
+        "type": "series",
+        "status": "planned",
+        "rating": null,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/lA9CNSdo50iQPZ8A2fyVpMvJZAf.jpg",
+        "dateAdded": "2025-12-29T16:59:00.200Z"
+    },
+    {
+        "id": "1767028611613",
+        "title": "Life is Strange 2",
+        "type": "game",
+        "status": "completed",
+        "rating": 8,
+        "notes": "",
+        "cover": "https://us.gamesplanet.com/acache/37/91/1/us/packshot-21f50dc8aaecdc8a9a9f00e78d0bde91.jpg",
+        "dateAdded": "2025-12-29T17:16:51.613Z"
+    },
+    {
+        "id": "1767028679475",
+        "title": "Life Is Strange: Before The Storm - Deluxe Edition",
+        "type": "game",
+        "status": "completed",
+        "rating": 9.7,
+        "notes": "",
+        "cover": "https://images.greenmangaming.com/cf1a665c3cbf4eaeb3ab08b6cf057126/beebbeace1494f5f890f2d99e56e2792.jpg",
+        "dateAdded": "2025-12-29T17:17:59.475Z"
+    },
+    {
+        "id": "1767029319256",
+        "title": "Outlast",
+        "type": "game",
+        "status": "completed",
+        "rating": 8,
+        "notes": "",
+        "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/238320/capsule_231x87.jpg?t=1666817106",
+        "dateAdded": "2025-12-29T17:28:39.256Z"
+    },
+    {
+        "id": "1767029365938",
+        "title": "Outlast 2",
+        "type": "game",
+        "status": "completed",
+        "rating": 8,
+        "notes": "",
+        "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/414700/capsule_231x87.jpg?t=1618944453",
+        "dateAdded": "2025-12-29T17:29:25.938Z"
+    },
+    {
+        "id": "1767029394968",
+        "title": "Sifu",
+        "type": "game",
+        "status": "completed",
+        "rating": 8,
+        "notes": "",
+        "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2138710/capsule_231x87.jpg?t=1754555101",
+        "dateAdded": "2025-12-29T17:29:54.968Z"
+    },
+    {
+        "id": "1767029797131",
+        "title": "Dragon Ball Xenoverse 2 - Super Pass",
+        "type": "game",
+        "status": "completed",
+        "rating": 9,
+        "notes": "",
+        "cover": "https://sttc.gamersgate.com/images/product/dragon-ball-xenoverse-2-super-pass/cover-180-6ebc89.jpg",
+        "dateAdded": "2025-12-29T17:36:37.131Z"
+    },
+    {
+        "id": "1767029827510",
+        "title": "DRAGON BALL XENOVERSE Bundle",
+        "type": "game",
+        "status": "completed",
+        "rating": 8,
+        "notes": "",
+        "cover": "https://hb.imgix.net/dcfffa62988d28e288456530269488ac5a260a20.jpg?auto=compress,format&fit=crop&h=84&w=135&s=caed39eab85ca827f2e08aef92808f88",
+        "dateAdded": "2025-12-29T17:37:07.510Z"
+    },
+    {
+        "id": "1767030130475",
+        "title": "Inception",
+        "type": "movie",
+        "status": "completed",
+        "rating": 9,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/5QHWgqaBxZI1eM5e3YhyKzY5o3z.jpg",
+        "dateAdded": "2025-12-29T17:42:10.475Z"
+    },
+    {
+        "id": "1767030256556",
+        "title": "Quo vado?",
+        "type": "movie",
+        "status": "completed",
+        "rating": 10,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/9X8csv75uWcVspL3Mk9gSJhBJ0J.jpg",
+        "dateAdded": "2025-12-29T17:44:16.556Z"
+    },
+    {
+        "id": "1767030281596",
+        "title": "Buen Camino",
+        "type": "movie",
+        "status": "completed",
+        "rating": 9.5,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/5sHyD2AEaaX9tzRkBdWM5G9NeJ8.jpg",
+        "dateAdded": "2025-12-29T17:44:41.596Z"
+    },
+    {
+        "id": "1767030320320",
+        "title": "Che bella giornata",
+        "type": "movie",
+        "status": "completed",
+        "rating": 9.5,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/4PgvPYJkkwgFK4epIsOFyhM3dhq.jpg",
+        "dateAdded": "2025-12-29T17:45:20.320Z"
+    },
+    {
+        "id": "1767030341506",
+        "title": "Cado dalle nubi",
+        "type": "movie",
+        "status": "completed",
+        "rating": 9.5,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/gR1gjETXUOBVJIZMpms96zFsyYt.jpg",
+        "dateAdded": "2025-12-29T17:45:41.506Z"
+    },
+    {
+        "id": "1767030360999",
+        "title": "Sole a catinelle",
+        "type": "movie",
+        "status": "completed",
+        "rating": 9.5,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/jI5WTCv0V3i4J6EcPWmxt4Da6sq.jpg",
+        "dateAdded": "2025-12-29T17:46:00.999Z"
+    },
+    {
+        "id": "1767030374736",
+        "title": "Tolo Tolo",
+        "type": "movie",
+        "status": "completed",
+        "rating": 8,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/CqUxog8F6aaK97RYh8YXhv3NDL.jpg",
+        "dateAdded": "2025-12-29T17:46:14.736Z"
+    },
+    {
+        "id": "1767030405572",
+        "title": "Interstellar",
+        "type": "movie",
+        "status": "completed",
+        "rating": 9,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/bMKiLh0mES4Uiococ240lbbTGXQ.jpg",
+        "dateAdded": "2025-12-29T17:46:45.572Z"
+    },
+    {
+        "id": "1767030540512",
+        "title": "Far cry 3",
+        "type": "game",
+        "status": "on-hold",
+        "rating": 5,
+        "notes": "",
+        "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/220240/capsule_231x87.jpg?t=1752169206",
+        "dateAdded": "2025-12-29T17:49:00.512Z"
+    },
+    {
+        "id": "1767033146912",
+        "title": "Shrek",
+        "type": "movie",
+        "status": "completed",
+        "rating": 9,
+        "notes": "",
+        "cover": "https://image.tmdb.org/t/p/w500/iB64vpL3dIObOtMZgX3RqdVdQDc.jpg",
+        "dateAdded": "2025-12-29T18:32:26.912Z"
+    }
+];
+
 // ===== Data Management =====
 class MediaTracker {
     constructor() {
-        this.media = this.loadFromStorage();
+        this.media = [];
         this.currentFilter = { type: 'all', status: 'all' };
         this.currentSort = 'ratingDesc'; // Default: highest rating first
         this.searchQuery = '';
         this.editingId = null;
         this.deletingId = null;
         this.suggestionTimeout = null;
-        this.currentPage = 1;
-        this.itemsPerPage = 20;
+        this.suggestionTimeout = null;
         this.compactView = false;
+        this.adminPassword = localStorage.getItem('mediaAdminPassword') || 'steven2025';
         this.init();
     }
 
-    init() {
+    async init() {
+        console.log(`🚀 Media Tracker initializing...`);
+
+        // Load data from cloud first
+        await this.loadData();
+
         this.bindEvents();
         this.render();
         this.updateStats();
+
+        console.log(`✅ Media Tracker ready with ${this.media.length} items.`);
     }
 
-    // ===== Local Storage =====
-    loadFromStorage() {
+    // ===== Cloud Data Management =====
+    async loadData() {
         try {
-            const data = localStorage.getItem('mediaTracker');
-            return data ? JSON.parse(data) : [];
+            console.log('📡 Loading data from Netlify Blobs...');
+            const response = await fetch('/api/get-data');
+
+            if (response.ok) {
+                const data = await response.json();
+                if (Array.isArray(data) && data.length > 0) {
+                    this.media = data;
+                    console.log(`✅ Loaded ${data.length} items from cloud`);
+                    return;
+                }
+            }
+
+            // If cloud is empty, use INITIAL_DATA
+            console.log('ℹ️ Cloud storage empty. Using INITIAL_DATA.');
+            this.media = [...INITIAL_DATA];
+
         } catch (error) {
-            console.error('Error loading data:', error);
-            return [];
+            console.error('❌ Error loading from cloud:', error);
+            console.log('ℹ️ Using INITIAL_DATA as fallback.');
+            this.media = [...INITIAL_DATA];
         }
     }
 
-    saveToStorage() {
+    async saveToCloud() {
         try {
-            localStorage.setItem('mediaTracker', JSON.stringify(this.media));
+            // Get password from localStorage or prompt user
+            let password = localStorage.getItem('mediaAdminPassword');
+
+            if (!password) {
+                password = prompt('Inserisci la password admin per salvare i dati:');
+                if (!password) {
+                    console.log('⚠️ Save cancelled - no password provided');
+                    return false;
+                }
+            }
+
+            console.log('💾 Saving data to cloud...');
+            const response = await fetch('/api/save-data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    password: password,
+                    data: this.media
+                })
+            });
+
+            if (response.ok) {
+                console.log(`✅ Successfully saved ${this.media.length} items to cloud`);
+                // Save password for future use
+                localStorage.setItem('mediaAdminPassword', password);
+                return true;
+            } else {
+                const error = await response.json();
+                console.error('❌ Cloud save failed:', error);
+                alert('❌ Errore: ' + (error.error || 'Password non valida'));
+                // Clear invalid password
+                localStorage.removeItem('mediaAdminPassword');
+                return false;
+            }
         } catch (error) {
-            console.error('Error saving data:', error);
+            console.error('❌ Network error saving to cloud:', error);
+            alert('❌ Errore di rete. Verifica la connessione.');
+            return false;
         }
     }
+
+
 
     // ===== Backup & Export =====
     exportData() {
@@ -108,7 +920,7 @@ class MediaTracker {
                     this.media = [...this.media, ...newItems];
                 }
 
-                this.saveToStorage();
+                this.saveToCloud();
                 this.render();
                 this.updateStats();
 
@@ -219,6 +1031,9 @@ class MediaTracker {
             this.previewCover(e.target.value);
         });
 
+        // View toggle
+        document.getElementById('viewToggle').addEventListener('click', () => this.toggleView());
+
         // Close suggestions when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.form-group')) {
@@ -226,24 +1041,7 @@ class MediaTracker {
             }
         });
 
-        // Pagination controls
-        document.getElementById('firstPage').addEventListener('click', () => this.goToPage(1));
-        document.getElementById('prevPage').addEventListener('click', () => this.goToPage(this.currentPage - 1));
-        document.getElementById('nextPage').addEventListener('click', () => this.goToPage(this.currentPage + 1));
-        document.getElementById('lastPage').addEventListener('click', () => {
-            const totalPages = this.getTotalPages();
-            this.goToPage(totalPages);
-        });
 
-        // View toggle
-        document.getElementById('viewToggle').addEventListener('click', () => this.toggleView());
-
-        // Items per page
-        document.getElementById('itemsPerPageSelect').addEventListener('change', (e) => {
-            this.itemsPerPage = e.target.value === 'all' ? Infinity : parseInt(e.target.value);
-            this.currentPage = 1;
-            this.render();
-        });
 
         // Status change - toggle rating field
         document.getElementById('mediaStatus').addEventListener('change', (e) => {
@@ -264,6 +1062,8 @@ class MediaTracker {
                 this.importData(file);
             }
         });
+
+
     }
 
     // ===== Modal Management =====
@@ -364,7 +1164,7 @@ class MediaTracker {
             this.media.push(mediaData);
         }
 
-        this.saveToStorage();
+        this.saveToCloud();
         this.closeModal();
         this.render();
         this.updateStats();
@@ -377,7 +1177,7 @@ class MediaTracker {
     confirmDelete() {
         if (this.deletingId) {
             this.media = this.media.filter(m => m.id !== this.deletingId);
-            this.saveToStorage();
+            this.saveToCloud();
             this.closeDeleteModal();
             this.render();
             this.updateStats();
@@ -463,20 +1263,14 @@ class MediaTracker {
         if (filtered.length === 0) {
             grid.innerHTML = '';
             emptyState.classList.add('show');
-            this.hidePagination();
         } else {
             emptyState.classList.remove('show');
 
-            // Pagination logic
-            const totalPages = Math.ceil(filtered.length / this.itemsPerPage);
-            const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-            const endIndex = Math.min(startIndex + this.itemsPerPage, filtered.length);
-            const paginatedMedia = filtered.slice(startIndex, endIndex);
-
-            grid.innerHTML = paginatedMedia.map(media => this.createMediaCard(media)).join('');
+            // No Pagination - Show All
+            grid.innerHTML = filtered.map(media => this.createMediaCard(media)).join('');
 
             // Bind action buttons
-            paginatedMedia.forEach(media => {
+            filtered.forEach(media => {
                 document.getElementById(`edit-${media.id}`).addEventListener('click', (e) => {
                     e.stopPropagation();
                     this.openModal(media.id);
@@ -487,9 +1281,6 @@ class MediaTracker {
                     this.deleteMedia(media.id);
                 });
             });
-
-            // Update pagination controls
-            this.updatePaginationControls(totalPages, filtered.length);
         }
     }
 
@@ -967,9 +1758,16 @@ class MediaTracker {
         }
 
         container.innerHTML = results.map(item => `
-            <div class="suggestion-item" data-title="${this.escapeHtml(item.title)}" data-cover="${item.cover || ''}">
+            <div class="suggestion-item" 
+                 data-title="${this.escapeHtml(item.title)}" 
+                 data-cover="${item.cover || ''}" 
+                 data-original-thumb="${item.originalThumb || ''}">
                 ${item.cover ?
-                `<img src="${item.cover}" alt="${item.title}" class="suggestion-cover">` :
+                `<img src="${item.cover}" 
+                      alt="${item.title}" 
+                      class="suggestion-cover" 
+                      onerror="if(this.dataset.fallback){this.src=this.dataset.fallback; this.closest('.suggestion-item').dataset.cover=this.dataset.fallback;} else {this.style.display='none';}"
+                      data-fallback="${item.originalThumb || ''}">` :
                 `<div class="suggestion-cover" style="display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--text-muted);">N/A</div>`
             }
                 <div class="suggestion-info">
