@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Debug Search</title>
+</head>
+
+<body>
+    <h1>API Debugger</h1>
+    <input type="text" id="query" value="Grand Theft Auto IV: The Complete Edition">
+    <button onclick="runDebug()">Test Search</button>
+    <div id="results"></div>
+
+    <script>
+        async function runDebug() {
+            const query = document.getElementById('query').value;
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = 'Searching...';
+
+            const log = (msg) => resultsDiv.innerHTML += `<p>${msg}</p>`;
+
+            // Test CheapShark
+            try {
+                log('<b>--- CheapShark ---</b>');
+                const csUrl = `https://www.cheapshark.com/api/1.0/games?title=${encodeURIComponent(query)}&limit=5`;
+                const csRes = await fetch(csUrl);
+                const csData = await csRes.json();
+
+                csData.forEach(game => {
+                    log(`Title: ${game.external}`);
+                    log(`SteamAppID: ${game.steamAppID}`);
+                    if (game.steamAppID) {
+                        const img = `https://steamcdn-a.akamaihd.net/steam/apps/${game.steamAppID}/library_600x900.jpg`;
+                        log(`Generated URL: <a href="${img}" target="_blank">${img}</a>`);
+                        log(`<img src="${img}" style="width:100px;">`);
+                    } else {
+                        log('No Steam AppID found.');
+                    }
+                    log('---');
+                });
+            } catch (e) {
+                log('CheapShark Error: ' + e.message);
+            }
+
+            // Test RAWG
+            try {
+                log('<b>--- RAWG ---</b>');
+                const apiKey = 'd0b3e8f5a8f44e0b8e5f5a8f44e0b8e5'; // Using key from tracker.js
+                // Note: Direct RAWG call might fail due to CORS, but let's try or use a proxy if needed. 
+                // Since this is a local file opened in browser, we need the proxy used in tracker.js
+                const proxyUrl = 'https://api.allorigins.win/get?url=';
+
+                // 1. Search
+                const rawgUrl = `https://api.rawg.io/api/games?key=${apiKey}&search=${encodeURIComponent(query)}&page_size=5`;
+                const rawgRes = await fetch(proxyUrl + encodeURIComponent(rawgUrl));
+                const rawgProxyData = await rawgRes.json();
+                const rawgData = JSON.parse(rawgProxyData.contents);
+
+                if (rawgData.results) {
+                    for (const game of rawgData.results) {
+                        log(`Title: ${game.name}`);
+                        if (game.stores) {
+                            log(`Stores found: ${game.stores.length}`);
+                            // Try to get store details
+                            const storesUrl = `https://api.rawg.io/api/games/${game.id}/stores?key=${apiKey}`;
+                            const storesRes = await fetch(proxyUrl + encodeURIComponent(storesUrl));
+                            const storesProxy = await storesRes.json();
+                            const storesData = JSON.parse(storesProxy.contents);
+
+                            const steamStore = storesData.results.find(s => s.store_id === 1 || s.url.includes('steam'));
+                            if (steamStore) {
+                                log(`Steam URL: ${steamStore.url}`);
+                                const match = steamStore.url.match(/\/app\/(\d+)/);
+                                if (match) {
+                                    const appID = match[1];
+                                    const img = `https://steamcdn-a.akamaihd.net/steam/apps/${appID}/library_600x900.jpg`;
+                                    log(`Generated Steam URL: <a href="${img}" target="_blank">${img}</a>`);
+                                    log(`<img src="${img}" style="width:100px;">`);
+                                }
+                            } else {
+                                log('No Steam store found in details.');
+                            }
+                        } else {
+                            log('No stores in search result.');
+                        }
+                        log('---');
+                    }
+                }
+            } catch (e) {
+                log('RAWG Error: ' + e.message);
+            }
+        }
+    </script>
+</body>
+
+</html>
